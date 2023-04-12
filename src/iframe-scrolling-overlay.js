@@ -141,6 +141,4 @@ function initIframeOverlays(sources, options = {}) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initIframeOverlays);
-
 module.exports = initIframeOverlays;
