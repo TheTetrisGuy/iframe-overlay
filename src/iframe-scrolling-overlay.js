@@ -90,7 +90,11 @@ function checkOptions(leftCurtain, rightCurtain, iframe) {
  *
  * @param iframe
  */
-function initOverlay(iframe) {
+function initOverlay(source, value, iframe) {
+    if (source.indexOf(value) === -1) {
+        return;
+    }
+
     const iframeContainer = document.createElement('div'),
         iframeOverlay = document.createElement('div'),
         leftCurtain = document.createElement('div'),
@@ -125,17 +129,24 @@ function initOverlay(iframe) {
  */
 export function initIframeOverlays(sources, options = {}) {
     if (sources === null || sources.length === 0) return;
-
     defaultOptions = Object.assign(defaultOptions, options);
 
     let iframes = document.getElementsByTagName('iframe');
 
     Array.from(iframes).forEach(function (element) {
         sources.forEach(function (value) {
-            const source = element.getAttribute('src');
+            let source = element.getAttribute('src');
 
-            if (source.indexOf(value) !== -1) {
-                initOverlay(element);
+            //add support for dynamically created iframes
+            if (source.indexOf('blank') !== -1) {
+                element.addEventListener('load', function() {
+                    source = element.getAttribute('src');
+                    element.removeEventListener('load', this); // remove the event listener after loading completed
+
+                    initOverlay(source, value, element);
+                });
+            } else {
+                initOverlay(source, value, element);
             }
         });
     });
