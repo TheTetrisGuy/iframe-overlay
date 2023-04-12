@@ -1,12 +1,12 @@
 {
-  "name": "iframe-overlay",
+  "name": "iframe-scrolling-overlay",
   "version": "1.0.0",
   "description": "",
-  "main": "src/iframe-overlay.js",
-  "style": "src/iframe-overlay.css",
+  "main": "src/iframe-scrolling-overlay.js",
+  "style": "src/iframe-scrolling-overlay.css",
   "scripts": {
-    "minify-css": "cleancss -o dist/css/iframe-overlay.min.css src/iframe-overlay.css",
-    "minify-js": "uglifyjs -c -o dist/js/iframe-overlay.min.js src/iframe-overlay.js"
+    "minify-css": "cleancss -o dist/css/iframe-scrolling-overlay.min.css src/iframe-scrolling-overlay.css",
+    "minify-js": "uglifyjs -c -o dist/js/iframe-scrolling-overlay.min.js src/iframe-scrolling-overlay.js"
   },
   "repository": {
     "type": "git",

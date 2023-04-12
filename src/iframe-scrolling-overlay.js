@@ -96,8 +96,8 @@ function initOverlay(iframe) {
         leftCurtain = document.createElement('div'),
         rightCurtain = document.createElement('div');
 
-    iframeContainer.className = 'io-iframe-overlay-container';
-    iframeOverlay.className = 'io-iframe-overlay';
+    iframeContainer.className = 'io-iframe-scrolling-overlay-container';
+    iframeOverlay.className = 'io-iframe-scrolling-overlay';
     leftCurtain.className = 'curtain-left closed';
     rightCurtain.className = 'curtain-right closed';
 
