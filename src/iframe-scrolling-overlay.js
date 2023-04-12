@@ -123,7 +123,7 @@ function initOverlay(iframe) {
  * @param sources
  * @param options
  */
-function initIframeOverlays(sources, options = {}) {
+export function initIframeOverlays(sources, options = {}) {
     if (sources === null || sources.length === 0) return;
 
     defaultOptions = Object.assign(defaultOptions, options);
@@ -140,5 +140,3 @@ function initIframeOverlays(sources, options = {}) {
         });
     });
 }
-
-module.exports = initIframeOverlays;
