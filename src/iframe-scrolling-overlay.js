@@ -90,11 +90,7 @@ function checkOptions(leftCurtain, rightCurtain, iframe) {
  *
  * @param iframe
  */
-function initOverlay(source, value, iframe) {
-    if (source.indexOf(value) === -1) {
-        return;
-    }
-
+function initOverlay(iframe) {
     const iframeContainer = document.createElement('div'),
         iframeOverlay = document.createElement('div'),
         leftCurtain = document.createElement('div'),
@@ -139,16 +135,16 @@ export function initIframeOverlays(sources, options = {}) {
                 let source = element.getAttribute('src');
 
                 //add support for dynamically created iframes
-                if (source.indexOf('blank') !== -1) {
-                    element.addEventListener('load', function() {
+                if (source.includes('blank')) {
+                    element.addEventListener('load', function () {
                         source = element.getAttribute('src');
                         element.removeEventListener('load', this); // remove the event listener after loading completed
 
-                        if (source.indexOf(value) !== -1) {
+                        if (source.includes(value)) {
                             initOverlay(element);
                         }
                     });
-                } else if (source.indexOf(value) !== -1) {
+                } else if (source.includes(value)) {
                     initOverlay(element);
                 }
             });
