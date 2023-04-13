@@ -91,19 +91,17 @@ function checkOptions(leftCurtain, rightCurtain, iframe) {
  * @param iframe
  */
 function initOverlay(iframe) {
-    const iframeContainer = document.createElement('div'),
-        iframeOverlay = document.createElement('div'),
+    const iframeOverlay = document.createElement('div'),
         leftCurtain = document.createElement('div'),
-        rightCurtain = document.createElement('div');
+        rightCurtain = document.createElement('div'),
+        iframeContainer = iframe.parentNode;
 
-    iframeContainer.className = 'io-iframe-scrolling-overlay-container';
     iframeOverlay.className = 'io-iframe-scrolling-overlay';
     leftCurtain.className = 'curtain-left closed';
     rightCurtain.className = 'curtain-right closed';
 
-    iframe.parentNode.insertBefore(iframeContainer, iframe);
+    iframeContainer.append(iframeOverlay);
     iframeOverlay.append(leftCurtain, rightCurtain);
-    iframeContainer.append(iframe, iframeOverlay);
 
     checkOptions(leftCurtain, rightCurtain, iframe);
 
@@ -120,31 +118,32 @@ function initOverlay(iframe) {
 
 /**
  *
+ * @param iframe
+ */
+function initContainer(iframe) {
+    const iframeContainer = document.createElement('div');
+    iframeContainer.className = 'io-iframe-scrolling-overlay-container';
+    iframe.parentNode.insertBefore(iframeContainer, iframe);
+    iframeContainer.append(iframe);
+}
+
+/**
+ *
  * @param sources
  * @param options
  */
 export function initIframeOverlays(sources, options = {}) {
-    document.addEventListener('DOMContentLoaded', function () {
-        if (sources === null || sources.length === 0) return;
+    if (sources === null || sources.length === 0) return;
+    let iframes = document.getElementsByTagName('iframe');
+
+    Array.from(iframes).forEach(function (element) {
+        initContainer(element);
         defaultOptions = Object.assign(defaultOptions, options);
 
-        let iframes = document.getElementsByTagName('iframe');
-
-        Array.from(iframes).forEach(function (element) {
+        element.addEventListener('load', function () {
+            const source = element.getAttribute('src');
             sources.forEach(function (value) {
-                let source = element.getAttribute('src');
-
-                //add support for dynamically created iframes
-                if (source.includes('blank')) {
-                    element.addEventListener('load', function () {
-                        source = element.getAttribute('src');
-                        element.removeEventListener('load', this); // remove the event listener after loading completed
-
-                        if (source.includes(value)) {
-                            initOverlay(element);
-                        }
-                    });
-                } else if (source.includes(value)) {
+                if (source.includes(value)) {
                     initOverlay(element);
                 }
             });
