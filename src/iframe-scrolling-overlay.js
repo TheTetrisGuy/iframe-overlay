@@ -128,26 +128,30 @@ function initOverlay(source, value, iframe) {
  * @param options
  */
 export function initIframeOverlays(sources, options = {}) {
-    if (sources === null || sources.length === 0) return;
-    defaultOptions = Object.assign(defaultOptions, options);
+    document.addEventListener('DOMContentLoaded', function () {
+        if (sources === null || sources.length === 0) return;
+        defaultOptions = Object.assign(defaultOptions, options);
 
-    let iframes = document.getElementsByTagName('iframe');
+        let iframes = document.getElementsByTagName('iframe');
 
-    Array.from(iframes).forEach(function (element) {
-        sources.forEach(function (value) {
-            let source = element.getAttribute('src');
+        Array.from(iframes).forEach(function (element) {
+            sources.forEach(function (value) {
+                let source = element.getAttribute('src');
 
-            //add support for dynamically created iframes
-            if (source.indexOf('blank') !== -1) {
-                element.addEventListener('load', function() {
-                    source = element.getAttribute('src');
-                    element.removeEventListener('load', this); // remove the event listener after loading completed
+                //add support for dynamically created iframes
+                if (source.indexOf('blank') !== -1) {
+                    element.addEventListener('load', function() {
+                        source = element.getAttribute('src');
+                        element.removeEventListener('load', this); // remove the event listener after loading completed
 
-                    initOverlay(source, value, element);
-                });
-            } else {
-                initOverlay(source, value, element);
-            }
+                        if (source.indexOf(value) !== -1) {
+                            initOverlay(element);
+                        }
+                    });
+                } else if (source.indexOf(value) !== -1) {
+                    initOverlay(element);
+                }
+            });
         });
     });
 }
