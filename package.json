@@ -1,6 +1,6 @@
 {
   "name": "iframe-scrolling-overlay",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "",
   "main": "src/iframe-scrolling-overlay.js",
   "style": "src/iframe-scrolling-overlay.css",
