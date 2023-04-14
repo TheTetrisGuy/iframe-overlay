@@ -10,13 +10,17 @@ Use npm to install the package
 
 ### Usage
 
-`import { initIframeOverlays } from "iframe-scrolling-overlay";`
+js
+- `import { initIframeOverlays } from "iframe-scrolling-overlay";`
+
+css
+- `@import "iframe-scrolling-overlay/dist/css/iframe-scrolling-overlay.min.css`
 
 ### API
 
 Use the initIframeOverlays function immediately
-
-#### `initIframeOverlays(param1, param2)`
+ 
+- `initIframeOverlays(param1, param2)`
 
 This function searches for Iframes and puts an overlay over them if the src-attribute 
 of the iframe matches a substring in the array of param1.
